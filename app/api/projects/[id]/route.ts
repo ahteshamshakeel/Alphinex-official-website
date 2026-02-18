@@ -4,6 +4,11 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+// Prevent static generation
+export async function generateStaticParams() {
+  return [];
+}
+
 // GET single project
 export async function GET(
   request: Request,

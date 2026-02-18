@@ -8,10 +8,9 @@ const nextConfig = {
       bodySizeLimit: '10mb',
     },
   },
-  // Prevent static generation of API routes during build
-  generateBuildId: async () => {
-    return 'build-' + Date.now();
-  },
+  // Skip static page generation for API routes
+  skipTrailingSlashRedirect: true,
+  skipMiddlewareUrlNormalize: true,
 };
 
 module.exports = nextConfig;

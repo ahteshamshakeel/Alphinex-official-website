@@ -6,6 +6,11 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+// Prevent static generation
+export async function generateStaticParams() {
+  return [];
+}
+
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
