@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
