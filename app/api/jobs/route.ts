@@ -19,7 +19,18 @@ export async function GET() {
     });
     return NextResponse.json(jobs);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch jobs' }, { status: 500 });
+    console.error('Error in GET /api/jobs:', error);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    const isConnectionError = message.includes('connect') || message.includes('ECONNREFUSED') || message.includes('Tenant') || message.includes('reach');
+    return NextResponse.json(
+      { 
+        error: isConnectionError 
+          ? 'Unable to connect to the database. Please try again later.' 
+          : 'Failed to fetch jobs',
+        details: process.env.NODE_ENV === 'development' ? message : undefined,
+      }, 
+      { status: 500 }
+    );
   }
 }
 
@@ -47,6 +58,7 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(job);
   } catch (error) {
+    console.error('Error in POST /api/jobs:', error);
     return NextResponse.json({ error: 'Failed to create job' }, { status: 500 });
   }
 }
